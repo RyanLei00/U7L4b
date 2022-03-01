@@ -20,5 +20,29 @@ the package.
 Once version of calculatePostage() should simply take in the package.
      */
 
+    /*
+    weight = 5
+    50
+        Math.abs(660 - 679) / 100.0;
 
+     */
+
+    public static double calculatePostage(int zip1, int zip2, double weight){
+        double price = 3.75;
+        price += weight * 10 * 0.05;
+        String zipFirst = "" + zip1;
+        String zipSecond = "" + zip2;
+        int zipOne = Integer.parseInt(zipFirst.substring(0, 3));
+        int zipTwo = Integer.parseInt(zipSecond.substring(0, 3));
+        price += Math.abs(zipOne - zipTwo) / 100.0;
+        return price;
+    }
+
+    public static double calculatePostage(Address address1, Address address2, double weight){
+
+    }
+
+    public static double calculatePostage(Package Package){
+
+    }
 }

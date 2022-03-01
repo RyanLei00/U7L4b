@@ -101,16 +101,14 @@ same and false if not.
         return zipcode;
     }
 
-    @Override
     public String toString() {
-        return "Address{" +
-                "address='" + address + '\'' +
-                ", streetNum='" + streetNum + '\'' +
-                ", streetName='" + streetName + '\'' +
-                ", aptNum='" + aptNum + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zipcode=" + zipcode +
-                '}';
+        String print = "";
+        print += getStreetNum();
+        print += getStreetName();
+        print += getAptNum();
+        print += getCity();
+        print += getState();
+        print += getZipcode();
+        return print;
     }
 }
