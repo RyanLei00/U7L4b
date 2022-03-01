@@ -103,12 +103,14 @@ same and false if not.
 
     public String toString() {
         String print = "";
-        print += getStreetNum();
-        print += getStreetName();
-        print += getAptNum();
-        print += getCity();
-        print += getState();
-        print += getZipcode();
+        print += getStreetNum() + " ";
+        print += getStreetName() + " ";
+        if(aptNum != null) {
+            print += getAptNum() + " ";
+        }
+        print += getCity() + " ";
+        print += getState() + " ";
+        print += getZipcode() + " ";
         return print;
     }
 }
