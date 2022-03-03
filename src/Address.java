@@ -64,13 +64,34 @@ same and false if not.
         this.zipcode = address.getZipcode();
     }
 
-    public Address(String address){
-        String[] a = address.split(",");
-        city = a[1];
-        streetNum = a[0].substring(0, a[0].indexOf(" "));
-        streetName = a[0].substring(a[0].indexOf(" ") + 1);
-        state = a[2].substring(0, a[2].indexOf(" "));
-        zipcode = Integer.parseInt(a[2].substring(a[2].indexOf(" ") + 1));
+    public Address(String address)
+    {
+        boolean hasApt = true;
+        if(address.indexOf("Apt") == -1)
+        {
+            hasApt = false;
+            aptNum = null;
+        }
+        streetNum = address.substring(0,address.indexOf(" "));
+        address = address.substring(address.indexOf(" ") + 1);
+        if(hasApt)
+        {
+            streetName = address.substring(0,address.indexOf("Apt") -1);
+            address = address.substring(address.indexOf("Apt"));
+            aptNum = address.substring(0,address.indexOf(","));
+            address = address.substring(address.indexOf(",") + 2);
+        }
+        else
+        {
+            streetName = address.substring(0,address.indexOf(","));
+            address = address.substring(address.indexOf(",") + 2);
+        }
+
+        city = address.substring(0,address.indexOf(","));
+        address = address.substring(address.indexOf(",") + 2);
+        state = address.substring(0,address.indexOf(" "));
+        address = address.substring(address.indexOf(" ") + 1);
+        zipcode = Integer.parseInt(address);
     }
 
     public String getAddress() {
