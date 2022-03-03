@@ -1,31 +1,4 @@
 public class Address {
-    /*
-An Address is made up of the following:
-The Street Number (remember that this could be a number like 101 or it could also
-have a letter like 101A).
-The Street Name
-The Apartment Number (which should be optional)
-The City
-The State
-The Zip Code (which should be exactly 5 numbers)
-
-The Address class is going to need 3 constructors:
-One that takes in the separate pieces of the address and assigns them to the proper
-fields.
-One that takes in an address object and copies its information into the fields.
-One that takes in an address as a String, breaks up the information, and copies it into
-the fields.
-
-The Address class must have an accessor method for each of its fields.
-The Address class must have a toString() that returns the address in the following
-format:
-Number Street Apt Number (optional), City, State Zip
-1313 Mockingbird Lane Apt 6A, Springfield, MO 65123
-1313 Mockingbird Lane, Springfield, MO 65123
-The Address class must have a method that takes in an Address Object as a
-parameter and compares it to the current object. It will return true if they are the
-same and false if not.
-     */
 
     private String address;
     private String streetNum;
