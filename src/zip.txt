@@ -1,3 +1,4 @@
+state minZip maxZip
 AL 35004 36925
 AK 99501 99950
 AZ 85001 86556

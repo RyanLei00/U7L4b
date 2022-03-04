@@ -1,21 +1,12 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        /*
-Generate some addresses, build some objects, and output the cost of shipping.
-Make sure your output clearly states all of the necessary information about the
-package.
-Create a user interface that allows the user to enter information about a single
-package to calculate the cost
-Allow the user to simulate some number of packages. Generate addresses in a
-realistic way (the key here is the zip codes) and calculate the shipping cost of all
-the packages in the simulation
-Use an ArrayList to store a list of Packages that you generate.
-For this simulation, make the addresses domestic (US only)
-         */
-
+    public static void main(String[] args) throws IOException {
         System.out.println("Test 1: ");
         Address addressTest1 = new Address("123", "Main", "Springfield", "NY", 11002);
         Address addressTest2 = new Address("123", "Main", "Springfield", "NY", 12305);
@@ -50,7 +41,6 @@ For this simulation, make the addresses domestic (US only)
         System.out.println("$" + PostageCalculator.calculatePostage(addressTest8, addressTest9, 48));
         System.out.println("-------------------------------------");
 
-
         System.out.println("Test 5: ");
         Address addressTest10 = new Address("123", "Main", "Springfield", "NE", 68503);
         Address addressTest11 = new Address("123", "Main", "Springfield", "FL", 33018);
@@ -58,6 +48,7 @@ For this simulation, make the addresses domestic (US only)
         System.out.println("To: " + addressTest11.toString());
         System.out.println("$" + PostageCalculator.calculatePostage(addressTest10, addressTest11, 39));
         System.out.println("-------------------------------------");
+        System.out.println();
 
         System.out.println("User Test:");
         Scanner testScan = new Scanner(System.in);
@@ -69,18 +60,53 @@ For this simulation, make the addresses domestic (US only)
         int w = testScan.nextInt();
         System.out.println("What is the height of the package?");
         int h = testScan.nextInt();
-        System.out.println("What is your street number?");
-        String streetNum = testScan.nextLine();
-        System.out.println("What is your street name?");
-        String streetName = testScan.nextLine();
-        System.out.println("What is your apartment number (type n/a if you don't have one)?");
-        String aptNum = testScan.nextLine();
-        System.out.println("What is your city?");
-        String city = testScan.nextLine();
-        System.out.println("What is your state?");
+        testScan.nextLine();
+        System.out.println("Which state are you sending this package to? (Ex: NY, CA)");
         String state = testScan.nextLine();
-        System.out.println("What is your zipcode?");
-        int zipcode = testScan.nextInt();
+
+        FileReader fileReader = new FileReader("src/zip.txt");
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line = bufferedReader.readLine();
+
+        ArrayList<Zip> zip = new ArrayList<Zip>();
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] infoFromTxt = line.split(" ");
+
+            String txtState = infoFromTxt[0];
+            int minZip = Integer.parseInt(infoFromTxt[1]);
+            int maxZip = Integer.parseInt(infoFromTxt[2]);
+
+            Zip newPackageLoc = new Zip(txtState, minZip, maxZip);
+            zip.add(newPackageLoc);
+        }
+        bufferedReader.close();
+
+        int packageMaxZip = 0;
+        int packageMinZip = 0;
+
+        for (int i = 0; i < zip.size(); i++) {
+            if (zip.get(i).getState().equals(state)) {
+                packageMaxZip = zip.get(i).getMaxZip();
+                packageMinZip = zip.get(i).getMinZip();
+            }
+        }
+
+        int newZip = (int) (Math.random() * (packageMaxZip - packageMinZip)) + packageMinZip;
+        int newZip2 = (int) (Math.random() * (packageMaxZip - packageMinZip)) + packageMinZip;
+
+
+        Address userAddTest = new Address("123", "Main", "Springfield", state, newZip);
+        Address compAddTest = new Address("123", "Main", "Springfield", state, newZip2);
+
+        ArrayList<Package> packages = new ArrayList<Package>();
+
+        Package userPacTest = new Package(userAddTest, compAddTest, weight, l, h, w);
+        packages.add(userPacTest);
+
+        System.out.println("From: " + userAddTest.toString());
+        System.out.println("To: " + compAddTest.toString());
+        System.out.println("$" + PostageCalculator.calculatePostage(userPacTest));
 
     }
 }
